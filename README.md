@@ -1,49 +1,48 @@
 # Archive.org Borrowed Book Downloader
 
-![Banner](docs/images/banner.png)
+GitHub repo context: **Archive.org Borrowed Book Downloader v3.0**
 
-This script is designed to download borrowed books from Archive.org by automatically flipping pages and capturing images. It includes a built-in UI for quality control and progress tracking.
+A powerful and user-friendly tool to download borrowed books from Archive.org. Now featuring high-quality **PDF Export** without any external dependencies!
 
-> [!IMPORTANT]
-> This tool is intended for use with **borrowed books** on Archive.org.
+## 🆕 What's New in v3.0 (Major Update)
+- ✅ **Native PDF Export**: Download entire books as a single, high-quality PDF.
+- ✅ **Custom PDF Engine**: Built from scratch to bypass Archive.org's strict Security Policy (CSP).
+- ✅ **Improved Stability**: Fixed infinite loops and better end-of-book detection.
+- ✅ **Dual Mode**: Choose between downloading individual **IMAGES** or a single **PDF**.
 
-## Features
+---
 
-- **Quality Control:** Use **Zoom In (+)** to increase image quality or **Zoom Out (-)** to decrease it before starting.
-- **PiP Mode:** A Picture-in-Picture window opens automatically to keep the script active in the background and show progress (Current Page / Total).
-- **Automation:** Captures each page individually and saves it as a `.jpg` file.
-- **Smart Naming:** Automatically cleans the book title and uses it for file naming (`BookTitle_001.jpg`).
+## 🚀 Installation & Usage
 
-## Visuals
+### Method 1: Bookmarklet (Recommended)
+1. Copy the entire code from [Archive Downloader Bookmark.txt](Archive%20Downloader%20Bookmark.txt).
+2. Create a new bookmark in your browser.
+3. Paste the code into the **URL** (or Address) field of the bookmark.
+4. Open your borrowed book on Archive.org and click the bookmark!
 
-<p align="center">
-  <img src="docs/images/Downloader.PNG" width="45%" alt="Downloader UI">
-  <img src="docs/images/PIP.PNG" width="45%" alt="PiP Progress">
-</p>
+### Method 2: Browser Console
+1. Open the [Archive Downloader.txt](Archive%20Downloader.txt) file and copy the code.
+2. Go to your borrowed book page on Archive.org.
+3. Press `F12` to open Developer Tools, go to the **Console** tab.
+4. Paste the code and press `Enter`.
 
-## How to Use
+---
 
-You can use this tool in two ways:
+## ✨ Key Features
+- **PDF & Image Support**: Choose the format that fits your needs.
+- **Picture-in-Picture (PiP)**: Keep the download running in the background while you browse other tabs.
+- **Quality Control**: Use the (+) and (-) buttons to adjust zoom levels for better resolution.
+- **Progress Tracking**: Real-time progress bar and percentage display.
+- **Smart Detection**: Automatically detects page numbers and handles book endings gracefully.
 
-### 1. Console Method
-1. Open the book you want to download on Archive.org.
-2. Open your browser's **Developer Tools** (Press `F12` or `Ctrl+Shift+I`).
-3. Go to the **Console** tab.
-4. Copy the entire code from [Archive Downloader.txt](Archive%20Downloader.txt), paste it into the console, and press `Enter`.
-5. Use the control panel that appears on the top right.
+---
 
-### 2. Bookmarklet Method (Recommended)
-1. Create a new bookmark in your browser.
-2. Name it "Archive Downloader".
-3. Copy the code from [Archive Downloader Bookmark.txt](Archive%20Downloader%20Bookmark.txt) and paste it into the **URL** field of the bookmark.
-4. While on the Archive.org book page, simply click the bookmark to launch the tool.
+## 🛠 How it Works
+Due to Archive.org's strict Content Security Policy, standard PDF libraries (like jsPDF) cannot be loaded easily. Version 3.0 introduces a **custom-built PDF generator** that runs entirely within the page's original context, ensuring a secure and reliable export process every time.
 
-## Technical Details
+---
 
-- Uses a **PiP (Picture-in-Picture) hack** to prevent the browser from throttling the script when the tab is in the background.
-- Monitors page count automatically from the Archive.org interface.
-- Includes a 15-second timeout for slow-loading pages to prevent skipping.
+## 📄 License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## License
-
-This project is licensed under the [MIT License](LICENSE).
+*Disclaimer: This tool is for personal use only. Please respect Archive.org's terms of service and copyright laws.*
