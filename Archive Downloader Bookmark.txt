@@ -1,0 +1,289 @@
+javascript:(async function(){
+    /* --- CAPTURE TITLE FIRST --- */
+    const originalTitle = document.title; 
+
+    /* --- CONFIGURATION --- */
+    const config = {
+        loopInterval: 200,    
+        waitTimeout: 15000,   
+        selectors: {
+            zoomIn: '.icon.icon-magnify.plus',
+            zoomOut: '.BRicon.zoom_out', 
+            oneUp: '.icon.icon-onepg', 
+            nextBtn: ['.book_flip_next', '.flip-btn.next', '.icon-right-arrow', 'button[title="Next page"]'], 
+            image: 'img.BRpageimage',
+            pageDisplay: '.BRcurrentpage'
+        }
+    };
+
+    /* --- HELPERS --- */
+    function getCleanBookTitle() {
+        let t = originalTitle;
+        if (t.includes(" : Free")) t = t.split(" : ")[0];
+        if (t.includes("Full text of")) t = t.replace("Full text of", "");
+        return t.replace(/[^a-zA-Z0-9\-_ ]/g, '').trim().replace(/\s+/g, '_').substring(0, 50) || "Archive_Book";
+    }
+
+    function detectTotalPages() {
+        try {
+            const text = document.querySelector(config.selectors.pageDisplay)?.innerText;
+            if (text && text.includes('/')) {
+                return parseInt(text.split('/')[1].trim());
+            }
+        } catch (e) {}
+        return 9999;
+    }
+
+    /* --- UI PANEL --- */
+    const panelId = 'ad-panel-v1.8';
+    if(document.getElementById(panelId)) document.getElementById(panelId).remove();
+    
+    const initialMax = detectTotalPages();
+    const bookName = getCleanBookTitle();
+
+    const panel = document.createElement('div');
+    panel.style.cssText = "position:fixed;top:10px;right:10px;width:300px;background:#050505;color:#fff;padding:15px;border:2px solid #00b0ff;z-index:2147483647;font-family:sans-serif;box-shadow:0 0 40px rgba(0,176,255,0.4);font-size:12px;border-radius:8px;";
+    
+    panel.innerHTML = `
+        <h3 style="margin:0 0 10px;text-align:center;border-bottom:1px solid #333;padding-bottom:8px;color:#00b0ff;font-weight:bold;">ARCHIVE DOWNLOADER <span style="font-size:10px;">v1.8</span></h3>
+        
+        <div style="background:#1a1a1a;padding:8px;border-radius:4px;margin-bottom:10px;">
+            <div style="margin-bottom:5px;color:#888;text-align:center;">1. QUALITY CONTROL</div>
+            <div style="display:flex;gap:5px;">
+                <button id="ad-plus" style="flex:1;background:#333;color:#fff;border:1px solid #555;cursor:pointer;">(+) ZOOM IN</button>
+                <button id="ad-minus" style="flex:1;background:#333;color:#fff;border:1px solid #555;cursor:pointer;">(-) ZOOM OUT</button>
+            </div>
+        </div>
+
+        <div style="margin-bottom:10px;background:#111;padding:8px;border-radius:4px;display:flex;justify-content:space-between;">
+            <div style="text-align:center;">
+                <span style="color:#aaa;display:block;margin-bottom:2px;">Start #</span>
+                <input type="number" id="ad-start" value="0" style="width:50px;background:#333;color:#fff;border:1px solid #555;text-align:center;">
+            </div>
+            <div style="text-align:center;">
+                <span style="color:#aaa;display:block;margin-bottom:2px;">End (Total)</span>
+                <input type="number" id="ad-end" value="${initialMax}" style="width:50px;background:#333;color:#fff;border:1px solid #555;text-align:center;">
+            </div>
+        </div>
+
+        <div style="margin-bottom:10px;color:#888;font-size:10px;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+            File: <span style="color:#fff;">${bookName}_000.jpg</span>
+        </div>
+
+        <div id="ad-status" style="margin-bottom:10px;color:#00b0ff;padding:5px;border:1px solid #333;min-height:20px;white-space:nowrap;overflow:hidden;">Ready...</div>
+        
+        <button id="ad-go" style="width:100%;background:#2962ff;color:#fff;border:none;padding:12px;cursor:pointer;font-weight:bold;font-size:14px;border-radius:4px;">START DOWNLOAD</button>
+        <div style="font-size:10px;color:#666;text-align:center;margin-top:5px;">Keep PiP window open!</div>
+    `;
+    document.body.appendChild(panel);
+
+    /* --- VARIABLES --- */
+    let isRunning = false;
+    let pageCounter = 0;
+    let maxPages = 9999;
+    let processedURLs = new Set();
+    
+    const statusEl = document.getElementById('ad-status');
+    const goBtn = document.getElementById('ad-go');
+    const startInput = document.getElementById('ad-start');
+    const endInput = document.getElementById('ad-end');
+
+    /* --- UTILS --- */
+    const getEl = (sel) => {
+        if(Array.isArray(sel)) {
+            for(let s of sel) {
+                let el = document.querySelector(s);
+                if(el) return el;
+            }
+            return null;
+        }
+        return document.querySelector(sel);
+    };
+    const wait = (ms) => new Promise(r => setTimeout(r, ms));
+    const log = (msg, color="#ccc") => { 
+        statusEl.innerText = msg; 
+        statusEl.style.color = color;
+        if(isRunning) document.title = `[${pageCounter}/${maxPages}] ${msg}`;
+    };
+
+    /* --- PIP HACK --- */
+    async function activatePiP() {
+        try {
+            const canvas = document.createElement('canvas');
+            canvas.width = 300; canvas.height = 100;
+            const ctx = canvas.getContext('2d');
+            setInterval(() => {
+                ctx.fillStyle = '#000'; ctx.fillRect(0,0,300,100);
+                ctx.fillStyle = '#00b0ff'; ctx.font = '20px monospace';
+                ctx.fillText(`Page: ${pageCounter} / ${maxPages}`, 20, 55);
+                ctx.fillStyle = '#fff'; ctx.font = '12px sans-serif';
+                ctx.fillText("Background Active", 20, 80);
+            }, 1000);
+            const video = document.createElement('video');
+            video.srcObject = canvas.captureStream(10);
+            video.autoplay = true;
+            video.onloadedmetadata = async () => { try { await video.play(); await video.requestPictureInPicture(); } catch(e){} };
+        } catch(e){}
+    }
+
+    /* --- IMAGE FINDER --- */
+    function getBestImage() {
+        const images = document.querySelectorAll(config.selectors.image);
+        let bestImg = null;
+        let minDistance = Infinity;
+        const screenCenter = window.innerHeight / 2;
+
+        for (let img of images) {
+            if (img.complete && img.naturalWidth > 200 && img.width > 0) {
+                const rect = img.getBoundingClientRect();
+                const dist = Math.abs((rect.top + rect.height / 2) - screenCenter);
+                if (dist < minDistance) {
+                    minDistance = dist;
+                    bestImg = img;
+                }
+            }
+        }
+        return bestImg;
+    }
+
+    /* --- DOWNLOADER --- */
+    async function download(img, finalName) {
+        return new Promise(resolve => {
+            try {
+                img.style.opacity = 1; 
+                const canvas = document.createElement('canvas');
+                canvas.width = img.naturalWidth;
+                canvas.height = img.naturalHeight;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0);
+
+                canvas.toBlob(blob => {
+                    if (!blob) { resolve(false); return; }
+                    const a = document.createElement('a');
+                    a.href = URL.createObjectURL(blob);
+                    
+                    a.download = `${finalName}_${String(pageCounter).padStart(3, '0')}.jpg`;
+                    
+                    document.body.appendChild(a);
+                    a.click();
+                    
+                    setTimeout(() => { 
+                        document.body.removeChild(a); 
+                        URL.revokeObjectURL(a.href); 
+                        canvas.remove(); 
+                    }, 100);
+                    
+                    processedURLs.add(img.src);
+                    resolve(true);
+                }, 'image/jpeg', 0.90);
+            } catch { resolve(false); }
+        });
+    }
+
+    /* --- BUTTONS --- */
+    document.getElementById('ad-plus').onclick = () => getEl(config.selectors.zoomIn)?.click();
+    
+    document.getElementById('ad-minus').onclick = () => {
+        const btn = document.querySelector(config.selectors.zoomOut);
+        if(btn) btn.click();
+        else console.log("Zoom out button not found:", config.selectors.zoomOut);
+    };
+
+    /* --- MAIN LOOP --- */
+    async function startLoop() {
+        const title = bookName; 
+        
+        while (isRunning) {
+            if (pageCounter > maxPages) {
+                isRunning = false;
+                alert(`Reached limit of ${maxPages} pages.`);
+                goBtn.innerText = "COMPLETED";
+                break;
+            }
+
+            if (pageCounter % 5 === 0) {
+                const oneUp = getEl(config.selectors.oneUp);
+                if(oneUp) oneUp.click();
+            }
+
+            log(`${pageCounter}. Searching...`, "#fff");
+            let img = null;
+            let waitTime = 0;
+
+            while (isRunning && waitTime < config.waitTimeout) {
+                const candidate = getBestImage();
+                if (candidate && !processedURLs.has(candidate.src)) {
+                    img = candidate;
+                    break; 
+                }
+                await wait(config.loopInterval);
+                waitTime += config.loopInterval;
+                if (candidate && waitTime % 1000 === 0) candidate.scrollIntoView({block: "center", behavior: "auto"});
+            }
+
+            if (!img) {
+                log("Timeout! Skipping...", "#ff9100");
+                const nextBtn = getEl(config.selectors.nextBtn);
+                if (nextBtn) {
+                    nextBtn.click();
+                    document.dispatchEvent(new KeyboardEvent('keydown', {'key':'ArrowRight', 'keyCode':39}));
+                    await wait(2000);
+                    continue;
+                } else {
+                    isRunning = false;
+                    alert("No image or button found.");
+                    break;
+                }
+            }
+
+            log("Downloading...", "#00e676");
+            await wait(500); 
+            const success = await download(img, title);
+            
+            if (success) {
+                pageCounter++;
+                startInput.value = pageCounter; 
+                
+                const nextBtn = getEl(config.selectors.nextBtn);
+                if (nextBtn && !nextBtn.disabled) {
+                    log("Turning...", "#2979ff");
+                    nextBtn.click();
+                    document.dispatchEvent(new KeyboardEvent('keydown', {'key':'ArrowRight', 'keyCode':39}));
+                    await wait(1000); 
+                } else {
+                    isRunning = false;
+                    alert("End of Book!");
+                    goBtn.innerText = "DONE";
+                    break;
+                }
+            } else {
+                log("Error. Retrying...", "#d50000");
+                await wait(1000);
+            }
+        }
+    }
+
+    /* --- START --- */
+    goBtn.onclick = async () => {
+        if (isRunning) {
+            isRunning = false;
+            goBtn.innerText = "RESUME";
+            goBtn.style.background = "#2962ff";
+            return;
+        }
+
+        await activatePiP();
+
+        isRunning = true;
+        pageCounter = parseInt(startInput.value); 
+        maxPages = parseInt(endInput.value);     
+        
+        if(pageCounter === 0) processedURLs.clear();
+
+        goBtn.innerText = "STOP";
+        goBtn.style.background = "#d50000";
+        log("Started!", "#fff");
+        
+        startLoop();
+    };
+})();
