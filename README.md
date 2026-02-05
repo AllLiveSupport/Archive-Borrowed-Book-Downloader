@@ -6,7 +6,7 @@
 
 <br/>
 
-[![GitHub stars](https://img.shields.io/github/stars/AllLiveSupport/Archive-Downloader?style=for-the-badge&logo=github&color=orange)](https://github.com/AllLiveSupport/Archive-Downloader/stargazers)
+[![GitHub stars](https://img.shields.io/github/stars/AllLiveSupport/Archive-Borrowed-Book-Downloader?style=for-the-badge&logo=github&color=orange)](https://github.com/AllLiveSupport/Archive-Borrowed-Book-Downloader/stargazers)
 [![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge&logo=opensourceinitiative&logoColor=white)](LICENSE)
 [![User Script](https://img.shields.io/badge/User%20Script-Install-670000?style=for-the-badge&logo=tampermonkey&logoColor=white)](archive-downloader.user.js)
 [![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://buymeacoffee.com/alllivesupport)
@@ -98,7 +98,7 @@
 ## 📂 Project Structure
 
 ```bash
-📦 Archive-Downloader
+📦 Archive-Borrowed-Book-Downloader
  ┣ 📂 docs/images
  ┃ ┣ 🖼️ TDownload Button.PNG
  ┃ ┣ 🖼️ TDownloader.PNG
