@@ -1,133 +1,158 @@
-# 📚 Archive.org Borrowed Book Downloader v3.6
+<div align="center">
+  
+# 📚 Archive.org Borrowed Book Downloader
 
-A professional tool to download **borrowed books** from Archive.org. Choose between high-quality **PDF Export** or individual **JPEG Images**.
+### 🚀 Download any borrowed book from Archive.org as PDF or Images — for free!
 
-> ⚠️ **Important**: This tool works **ONLY with borrowed books**. You must have an active loan to use this downloader.
+<br/>
+
+[![GitHub stars](https://img.shields.io/github/stars/AllLiveSupport/Archive-Downloader?style=for-the-badge&logo=github&color=orange)](https://github.com/AllLiveSupport/Archive-Downloader/stargazers)
+[![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge&logo=opensourceinitiative&logoColor=white)](LICENSE)
+[![User Script](https://img.shields.io/badge/User%20Script-Install-670000?style=for-the-badge&logo=tampermonkey&logoColor=white)](archive-downloader.user.js)
+[![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://buymeacoffee.com/alllivesupport)
+
+<br/>
+
+<img src="https://img.shields.io/badge/Chrome-Supported-success?style=flat-square&logo=googlechrome&logoColor=white"/>
+<img src="https://img.shields.io/badge/Firefox-Supported-success?style=flat-square&logo=firefox&logoColor=white"/>
+<img src="https://img.shields.io/badge/Edge-Supported-success?style=flat-square&logo=microsoftedge&logoColor=white"/>
 
 ---
 
-## 🎯 Quick Start (Recommended: Tampermonkey)
+**✨ PDF Export • 🖼️ Image Mode • 📊 Progress Tracking • 🎬 PiP Support**
 
-The easiest and most reliable way to use this tool is via **Tampermonkey**. This method bypasses Archive.org's security restrictions automatically.
+> [!WARNING]
+> This tool works **ONLY with borrowed books**. You must have an active loan on Archive.org to use this downloader.
 
-### Installation Steps:
+</div>
 
-1. **Install Tampermonkey Extension** (Free & Open Source)
-   - [Chrome/Edge](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo)
-   - [Firefox](https://addons.mozilla.org/en-US/firefox/addon/tampermonkey/)
+<br/>
 
-2. **Install the Script**
-   - Open [`archive-downloader.user.js`](archive-downloader.user.js) from this repository
-   - Copy the entire code
-   - Click the Tampermonkey icon in your browser → **Create a new script**
-   - Paste the code and save (Ctrl+S)
+---
 
-3. **Start Downloading!**
-   - Go to Archive.org and **borrow a book**
-   - Open the book reader
-   - Look for the **orange download button** in the bottom-right corner 🟠
+## 🎯 Methods Comparison
+
+| Method | Best For | Difficulty | Latest Version |
+|:-------|:---------|:-----------|:---------------|
+| 🌐 **Tampermonkey** | Quick & easy (Recommended) | ⭐ Easy | **v3.6** (Orange) |
+| 💻 **Console** | Developers, manual use | ⭐⭐ Medium | **v3.0** (Blue) |
+| 🔖 **Bookmarklet** | Quick use (Restricted) | ⭐⭐⭐ Hard | Legacy |
+
+---
+
+<br/>
+
+## 🌐 Method 1: Tampermonkey (Recommended)
+
+### Step 1: Install Tampermonkey Extension
+
+| Browser | Install Link |
+|:-------:|:------------:|
+| <img src="https://img.shields.io/badge/Chrome-4285F4?style=for-the-badge&logo=googlechrome&logoColor=white"/> | [Install](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo) |
+| <img src="https://img.shields.io/badge/Firefox-FF7139?style=for-the-badge&logo=firefox&logoColor=white"/> | [Install](https://addons.mozilla.org/en-US/firefox/addon/tampermonkey/) |
+| <img src="https://img.shields.io/badge/Edge-0078D7?style=for-the-badge&logo=microsoftedge&logoColor=white"/> | [Install](https://microsoftedge.microsoft.com/addons/detail/tampermonkey/iikmkjmpaadaobahmlepeloendndfphd) |
+
+### Step 2: Install the Script
+
+1. Open [**`archive-downloader.user.js`**](archive-downloader.user.js).
+2. Click the **"Raw"** button or copy the entire code.
+3. In Tampermonkey, click **"Create a new script"**, paste the code, and **Save (Ctrl+S)**.
+
+### Step 3: Use It!
+
+1. 📖 **Borrow a book** from Archive.org.
+2. 👁️ Open the book in the reader.
+3. 🟠 Click the **orange download button** in the bottom-right.
+4. ⚙️ Adjust quality with **ZOOM IN** (Optional).
+5. 🚀 Set range and click **START DOWNLOAD**.
+
+<br/>
 
 ---
 
 ## 📸 Screenshots
 
-### Launcher Button (v3.6)
-![Launcher Button](docs/images/TDownload%20Button.PNG)
+| Feature | Screenshot |
+|:---|:---|
+| **Launcher Button** | ![Launcher Button](docs/images/TDownload%20Button.PNG) |
+| **Control Panel** | ![Control Panel](docs/images/TDownloader.PNG) |
+| **Background Progress** | ![PiP Window](docs/images/PIP.PNG) |
 
-### Download Control Panel
-![Control Panel](docs/images/TDownloader.PNG)
-
-### Picture-in-Picture Progress
-![PiP Window](docs/images/PIP.PNG)
-
----
-
-## ✨ Features
-
-- 📄 **Native PDF Export**: Custom PDF generation engine (no external libraries)
-- 🖼 **Image Mode**: Download each page as a numbered JPEG file
-- 🎬 **PiP Support**: Picture-in-Picture window keeps the script active in background
-- 📊 **Real-time Progress**: Visual progress bar with percentage tracking
-- 🔍 **Quality Control**: Built-in zoom buttons to adjust image quality
-- 🏁 **Smart Detection**: Automatically finds best image quality and handles book endings
-- 🟠 **Visual Confirmation**: Orange launcher button confirms the script is active
+<br/>
 
 ---
 
-## 🛠 How to Use
+## ✨ Key Features
 
-1. **Borrow a book** from Archive.org (you must have an active loan)
-2. Open the book in the reader
-3. Click the **orange button** in the bottom-right corner
-4. Choose your download mode:
-   - **IMAGES**: Downloads each page as a separate JPEG file
-   - **PDF**: Generates a single PDF file with all pages
-5. **(Optional)** Use **ZOOM IN** to increase image quality before downloading
-6. Set your page range (Start # and End #)
-7. Click **START DOWNLOAD**
-8. Keep the **Picture-in-Picture window** open while downloading
+- 📄 **Native PDF Export**: Built-in engine creates PDFs without extra libraries.
+- 🖼️ **Image Export**: Saves every page as a high-quality JPEG.
+- 🏁 **Smart Ending**: Automatically detects the last page of the book.
+- 🔍 **Quality Boost**: Built-in zoom controls to capture higher resolution images.
+- 🎬 **PiP Survival**: Keeps the download running even if the tab is in the background.
+- 📊 **Visual Feedback**: Real-time progress bar with percentage tracking.
+
+<br/>
 
 ---
 
-## 🔧 Alternative Methods
+## 📂 Project Structure
 
-### Method 2: Browser Console (Manual)
-If you prefer not to use Tampermonkey:
+```bash
+📦 Archive-Downloader
+ ┣ 📂 docs/images
+ ┃ ┣ 🖼️ TDownload Button.PNG
+ ┃ ┣ 🖼️ TDownloader.PNG
+ ┃ ┗ 🖼️ PIP.PNG
+ ┣ 📜 archive-downloader.user.js          # Latest Tampermonkey script (v3.6)
+ ┣ 📜 Archive Downloader.txt              # Console script (v3.0)
+ ┣ 📜 Archive Downloader Bookmark.txt     # Bookmarklet script
+ ┗ 📜 LICENSE
+```
 
-1. Open [`Archive Downloader.txt`](Archive%20Downloader.txt) and copy the code
-2. Go to your borrowed book on Archive.org
-3. Press `F12` → **Console** tab
-4. Paste the code and press `Enter`
-
-> **Note**: The console version is v3.0. For the latest features (v3.6), use Tampermonkey.
-
-### Method 3: Bookmarklet
-*Not recommended due to Archive.org's Content Security Policy restrictions.*
-
-1. Create a new bookmark in your browser
-2. Paste the content of [`Archive Downloader Bookmark.txt`](Archive%20Downloader%20Bookmark.txt) as the URL
+<br/>
 
 ---
 
 ## ❓ FAQ
 
-**Q: Do I need to pay for Tampermonkey?**  
-A: No! Tampermonkey is completely **free and open source**. No licenses or subscriptions required.
+<details>
+<summary><b>Is Tampermonkey free?</b></summary>
+Yes! It is completely free and open source.
+</details>
 
-**Q: Why is the button orange instead of blue?**  
-A: Version 3.6 uses an orange theme to help you visually confirm the script has been updated.
+<details>
+<summary><b>Why is the button orange?</b></summary>
+The orange theme indicates version 3.6, which includes the latest security bypasses and quality improvements.
+</details>
 
-**Q: Can I use this on any Archive.org book?**  
-A: No, this tool **only works with borrowed books**. You must have an active loan.
+<details>
+<summary><b>The button doesn't appear. Why?</b></summary>
+Ensure the book is <b>borrowed</b> (active loan), the script is installed and enabled, and you have refreshed the page.
+</details>
 
-**Q: The button doesn't appear. What should I do?**  
-A: Make sure you:
-   - Have borrowed the book (look for a "Return now" button on the page)
-   - Installed the Tampermonkey script correctly
-   - Refreshed the page after installation
-   - Check the browser console (F12) for any error messages
-
-**Q: Why use Tampermonkey instead of the console version?**  
-A: The console script is very long (600+ lines), making it impractical to paste every time. Tampermonkey automatically runs the script on every borrowed book page.
+<br/>
 
 ---
 
-## 📋 Technical Details
+## ⚠️ Disclaimer
 
-- **Version**: 3.6 (Beta)
-- **Supported Browsers**: Chrome, Edge, Firefox (via Tampermonkey)
-- **File Formats**: JPEG (images), PDF (document)
-- **Image Quality**: Adjustable via zoom controls
-- **PDF Engine**: Custom implementation (no external dependencies)
+> [!CAUTION]
+> **Legal Notice:** This tool is provided for **personal and educational purposes only**.
 
----
+- 📚 **Respect Copyright:** Only use this for your personal backup of borrowed materials.
+- ⚖️ **Terms of Service:** You are responsible for complying with Archive.org's TOS.
+- 👤 **Ownership:** Do not redistribute downloaded files.
 
-## 📑 License
-
-MIT License. Created for educational purposes.
-
-**Please respect copyright laws and Archive.org's terms of service.** This tool is intended for personal backup of borrowed materials only.
+<br/>
 
 ---
 
-**Made with ❤️ by AllLiveSupport**
+<div align="center">
+
+### ⭐ Star this repo if it helped you!
+
+<br/>
+
+[![GitHub](https://img.shields.io/badge/AllLiveSupport-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/AllLiveSupport)
+
+</div>
